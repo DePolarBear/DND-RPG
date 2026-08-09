@@ -212,33 +212,7 @@ t.setPosition(stred);
 
 ---
 
-## 10. Dve chyby z posledného testu
-
-### `Nemam dosah`, hoci dosah bol
-
-`niektoIde` sa počítal na začiatku slučky. Klik na nepriateľa prišiel neskôr, v `pollEvent`, a práve on rozbehol chôdzu. Blok "útok po príchode" ale ešte v tom istom frame videl **starú hodnotu** `niektoIde == false`, usúdil, že postava už dokráčala, a vyhodnotil útok na pôvodnej dlaždici. Odtiaľ dosah nebol.
-
-Postava potom aj tak došla, preto po opätovnom kliknutí útok normálne prešiel.
-
-Oprava je jeden riadok za `pollEvent`:
-
-```cpp
-niektoIde = animHrac.bezi() || animVlk.bezi();
-```
-
-Poučenie: hodnota vypočítaná na začiatku framu prestáva platiť vo chvíli, keď niečo v tom istom frame zmení jej vstupy. Buď ju prepočítaj, alebo sa pýtaj priamo.
-
-### Vlk chodil zvláštnou cestou
-
-Dve nezávislé príčiny.
-
-**Kľukatá cesta.** Susedov s nákladom o 1 menším býva viac a všetci dávajú rovnako dlhú cestu. Rekonštrukcia brala prvého v poradí, teda hore-vľavo, takže cesta mala minimálny počet krokov, ale kľučkovala do L. Teraz sa z kandidátov vyberá ten **najbližšie k rovnej čiare** medzi štartom a cieľom (cez cross product). Počet krokov je rovnaký, vyzerá to ale ako priama chôdza.
-
-**Zlý výber cieľa.** Vlk si vyberal dlaždicu podľa vzdušnej čiary k hráčovi. Vzdušná čiara ale klame: dlaždica za stromom vyzerá blízko, no obchádzka k nej je dlhá. Preto sa teraz púšťa **druhý BFS, tentokrát od hráča**, a vlk vyberá dlaždicu s najmenšou skutočnou vzdialenosťou v krokoch. Prestal zabáčať do slepých uličiek.
-
----
-
-## 11. Čo je ďalej
+## 10. Čo je ďalej
 
 - streľba na susedného nepriateľa má v 5e disadvantage, zatiaľ sa neráta
 - viac nepriateľov - `vlk` a `vlkShape` treba nahradiť zoznamom a pridať iniciatívu
