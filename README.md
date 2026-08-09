@@ -1,7 +1,5 @@
 # RPG - ako to celé funguje
 
-Prehľad celej hry k 9.8.2026. Slúži na to, aby si sa v tom vyznal o mesiac.
-
 ---
 
 ## 1. Rozdelenie do súborov
